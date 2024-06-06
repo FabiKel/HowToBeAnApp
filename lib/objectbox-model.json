@@ -1,0 +1,221 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3926976284960825798",
+      "lastPropertyId": "16:349192511036393982",
+      "name": "Character",
+      "properties": [
+        {
+          "id": "1:1369267272661203982",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9214968411315947213",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:3825450682752723298",
+          "name": "created",
+          "type": 10
+        },
+        {
+          "id": "4:7346897996475638471",
+          "name": "updated",
+          "type": 10
+        },
+        {
+          "id": "5:4464259847765636860",
+          "name": "gender",
+          "type": 9
+        },
+        {
+          "id": "6:1105999053889805307",
+          "name": "age",
+          "type": 6
+        },
+        {
+          "id": "7:6646942100512848754",
+          "name": "lp",
+          "type": 6
+        },
+        {
+          "id": "8:557000068553001836",
+          "name": "lpMax",
+          "type": 6
+        },
+        {
+          "id": "9:3002969220915429931",
+          "name": "body",
+          "type": 9
+        },
+        {
+          "id": "10:1843655753175391394",
+          "name": "religion",
+          "type": 9
+        },
+        {
+          "id": "11:6647537592252781550",
+          "name": "profession",
+          "type": 9
+        },
+        {
+          "id": "12:8470754044369777383",
+          "name": "family",
+          "type": 9
+        },
+        {
+          "id": "13:4294777472193799299",
+          "name": "image",
+          "type": 9
+        },
+        {
+          "id": "15:1768457263694007463",
+          "name": "isHidden",
+          "type": 1
+        },
+        {
+          "id": "16:349192511036393982",
+          "name": "description",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:8593977249015221319",
+      "lastPropertyId": "5:8385737859424788151",
+      "name": "InventoryItem",
+      "properties": [
+        {
+          "id": "1:9034101402660131894",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2864117045962556829",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:3564445865755714349",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:5207425062884364070",
+          "name": "image",
+          "type": 9
+        },
+        {
+          "id": "5:8385737859424788151",
+          "name": "characterInvItemId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:8137722359035426682",
+          "relationTarget": "Character"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:2736022376275115370",
+      "lastPropertyId": "6:1358748112006608851",
+      "name": "Note",
+      "properties": [
+        {
+          "id": "1:5471018038225609136",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4933737609557417697",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:5806365636296300591",
+          "name": "text",
+          "type": 9
+        },
+        {
+          "id": "4:2381496639827025397",
+          "name": "created",
+          "type": 6
+        },
+        {
+          "id": "5:6568855569562104153",
+          "name": "characterNoteId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:3619455684558896048",
+          "relationTarget": "Character"
+        },
+        {
+          "id": "6:1358748112006608851",
+          "name": "updated",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:3782489303599942243",
+      "lastPropertyId": "6:2784253262204774765",
+      "name": "Skill",
+      "properties": [
+        {
+          "id": "1:2758800586986537530",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:851847850239319742",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7318368836976979367",
+          "name": "value",
+          "type": 6
+        },
+        {
+          "id": "4:5868509515336393657",
+          "name": "characterSkillId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:9001692497310881221",
+          "relationTarget": "Character"
+        },
+        {
+          "id": "6:2784253262204774765",
+          "name": "typeIndex",
+          "type": 6
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "4:3782489303599942243",
+  "lastIndexId": "3:9001692497310881221",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    4131868325971931602,
+    8533648314882943311
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

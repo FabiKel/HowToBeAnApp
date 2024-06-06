@@ -1,0 +1,31 @@
+name: htbah_app
+description: "App for How to be a Hero PnP"
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 0.0.1+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  flutter_riverpod: ^2.5.1
+  objectbox: ^4.0.1
+  objectbox_flutter_libs: any
+  smooth_page_indicator: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.9
+  objectbox_generator: any
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
