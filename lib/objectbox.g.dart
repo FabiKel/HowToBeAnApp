@@ -25,7 +25,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(1, 3926976284960825798),
       name: 'Character',
-      lastPropertyId: const obx_int.IdUid(16, 349192511036393982),
+      lastPropertyId: const obx_int.IdUid(20, 6936020362280275087),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -102,6 +102,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(16, 349192511036393982),
             name: 'description',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(20, 6936020362280275087),
+            name: 'gbpUsed',
+            type: 27,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -271,7 +276,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [4131868325971931602, 8533648314882943311],
+      retiredPropertyUids: const [
+        4131868325971931602,
+        8533648314882943311,
+        9113918794386389017,
+        7279305249759774662,
+        3824280087345013779
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -303,7 +314,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final familyOffset = fbb.writeString(object.family);
           final imageOffset = fbb.writeString(object.image);
           final descriptionOffset = fbb.writeString(object.description);
-          fbb.startTable(17);
+          final gbpUsedOffset = fbb.writeListInt64(object.gbpUsed);
+          fbb.startTable(21);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, nameOffset);
           fbb.addInt64(2, object.created.millisecondsSinceEpoch);
@@ -319,6 +331,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(12, imageOffset);
           fbb.addBool(14, object.isHidden);
           fbb.addOffset(15, descriptionOffset);
+          fbb.addOffset(19, gbpUsedOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -359,6 +372,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 34, '');
           final isHiddenParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false);
+          final gbpUsedParam =
+              const fb.ListReader<int>(fb.Int64Reader(), lazy: false)
+                  .vTableGet(buffer, rootOffset, 42, []);
           final object = Character(
               id: idParam,
               name: nameParam,
@@ -374,7 +390,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               family: familyParam,
               image: imageParam,
               description: descriptionParam,
-              isHidden: isHiddenParam);
+              isHidden: isHiddenParam,
+              gbpUsed: gbpUsedParam);
           obx_int.InternalToManyAccess.setRelInfo<Character>(
               object.skills,
               store,
@@ -585,6 +602,10 @@ class Character_ {
   /// See [Character.description].
   static final description =
       obx.QueryStringProperty<Character>(_entities[0].properties[14]);
+
+  /// See [Character.gbpUsed].
+  static final gbpUsed =
+      obx.QueryIntegerVectorProperty<Character>(_entities[0].properties[15]);
 
   /// see [Character.skills]
   static final skills =

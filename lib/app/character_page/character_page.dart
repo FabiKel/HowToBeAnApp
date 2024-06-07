@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:htbah_app/app/character_page/character_page_skillbar.dart';
 import 'package:htbah_app/app/deletion_page.dart';
-import 'package:htbah_app/app/not_implemented_helper.dart';
+import 'package:htbah_app/app/widgets/design/not_implemented_helper.dart';
 import 'package:htbah_app/app/widgets/chara_info_wrapper.dart';
 import 'package:htbah_app/app/widgets/lp_tile.dart';
 import 'package:htbah_app/app/widgets/notes_overview.dart';

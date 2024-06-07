@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:htbah_app/app/not_implemented_helper.dart';
+import 'package:htbah_app/app/widgets/design/not_implemented_helper.dart';
 import 'package:htbah_app/app/notes_page/note_page.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
 import 'package:htbah_app/app/widgets/item_delete_confirmation.dart';
-import 'package:htbah_app/app/widgets/list_view_separator.dart';
+import 'package:htbah_app/app/widgets/design/list_view_separator.dart';
 import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:htbah_app/models/note.dart';
@@ -40,11 +41,7 @@ class _NotesPageState extends State<NotesPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.black26,
-              ),
+            child: DarkContainerBox(
               margin: const EdgeInsets.all(10),
               child: ListView.separated(
                 itemCount: widget.chara.notes.length,

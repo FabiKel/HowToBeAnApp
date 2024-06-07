@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:htbah_app/app/creation_page/creation_page_first_step.dart';
 import 'package:htbah_app/app/creation_page/creation_page_focus.dart';
 import 'package:htbah_app/app/creation_page/creation_page_third_step.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
 import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:htbah_app/models/skill.dart';
@@ -19,9 +19,9 @@ class CreationPage extends ConsumerStatefulWidget {
 
 class _CreationPageState extends ConsumerState<CreationPage> {
   late PageController pageViewController;
-  int pageIndex = 0;
   late CreationPageFocusManager focusManager;
   late Character newChara;
+  int pageIndex = 0;
 
   @override
   void initState() {
@@ -37,16 +37,12 @@ class _CreationPageState extends ConsumerState<CreationPage> {
       appBar: AppBar(
         title: const Text("Neuer Charakter"),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.download)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.import_export)),
         ],
       ),
       body: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.black26,
-              borderRadius: BorderRadius.circular(15),
-            ),
+          DarkContainerBox(
             margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             height: 60,
             width: double.infinity,

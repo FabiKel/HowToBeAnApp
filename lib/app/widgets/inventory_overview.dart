@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:htbah_app/app/inventory_page/inventory_page.dart';
 import 'package:htbah_app/app/widgets/inventory_list_tile.dart';
-import 'package:htbah_app/app/widgets/list_view_separator.dart';
 import 'package:htbah_app/models/character.dart';
 
 class InventoryOverview extends StatefulWidget {
@@ -47,9 +46,8 @@ class _InventoryOverviewState extends State<InventoryOverview> {
           ],
         ),
         Expanded(
-          child: ListView.separated(
+          child: ListView.builder(
             itemCount: widget.chara.inventory.length,
-            separatorBuilder: (c, i) => const ListViewSeparator(),
             itemBuilder: (c, i) {
               final item = widget.chara.inventory.elementAt(i);
               return InventoryListTile(

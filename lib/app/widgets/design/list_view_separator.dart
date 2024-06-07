@@ -7,11 +7,12 @@ class ListViewSeparator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: 3,
+      margin: const EdgeInsets.fromLTRB(25, 5, 25, 10),
       alignment: Alignment.center,
-      child: const Icon(
-        Icons.circle,
-        size: 12,
-        color: Colors.white10,
+      decoration: BoxDecoration(
+        color: Colors.white12,
+        borderRadius: BorderRadius.circular(15)
       ),
     );
   }

@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:3926976284960825798",
-      "lastPropertyId": "16:349192511036393982",
+      "lastPropertyId": "20:6936020362280275087",
       "name": "Character",
       "properties": [
         {
@@ -83,6 +83,11 @@
           "id": "16:349192511036393982",
           "name": "description",
           "type": 9
+        },
+        {
+          "id": "20:6936020362280275087",
+          "name": "gbpUsed",
+          "type": 27
         }
       ],
       "relations": []
@@ -214,7 +219,10 @@
   "retiredIndexUids": [],
   "retiredPropertyUids": [
     4131868325971931602,
-    8533648314882943311
+    8533648314882943311,
+    9113918794386389017,
+    7279305249759774662,
+    3824280087345013779
   ],
   "retiredRelationUids": [],
   "version": 1

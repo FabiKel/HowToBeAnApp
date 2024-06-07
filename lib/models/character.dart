@@ -27,6 +27,7 @@ class Character {
   String image;
   String description;
   bool isHidden;
+  List<int> gbpUsed;
   @Backlink("characterSkill")
   final skills = ToMany<Skill>();
   @Backlink("characterNote")
@@ -55,6 +56,18 @@ class Character {
     return val;
   }
 
+  /// the int val for given skill: all skill point of skill / 10 and rounded
+  int getBaseValByType(SkillType type) {
+    double val = getSPByType(type).toDouble();
+    return (val / 10).round();
+  }
+
+  /// the "Geistesblitzpunkte" by skill type
+  int getGBPByType(SkillType type) {
+    double val = getBaseValByType(type).toDouble();
+    return (val / 10).round();
+  }
+
   @Transient()
   String get shortDesc {
     if (description.length <= 20) return description;
@@ -77,6 +90,7 @@ class Character {
     required this.image,
     required this.description,
     required this.isHidden,
+    this.gbpUsed = const [0, 0, 0],
   });
 
   int save(Box<Character> charaBox) {

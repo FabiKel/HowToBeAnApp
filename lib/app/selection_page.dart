@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:htbah_app/app/character_page/character_page.dart';
 import 'package:htbah_app/app/creation_page/creation_page.dart';
 import 'package:htbah_app/app/deletion_page.dart';
-import 'package:htbah_app/app/not_implemented_helper.dart';
+import 'package:htbah_app/app/widgets/design/not_implemented_helper.dart';
 import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:htbah_app/objectbox.g.dart';

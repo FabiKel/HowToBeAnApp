@@ -5,6 +5,8 @@ import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:htbah_app/models/skill.dart';
 
+import 'design/basic_list_tile.dart';
+
 class SkillListTile extends ConsumerStatefulWidget {
   final Skill skill;
   final Character chara;
@@ -37,21 +39,14 @@ class _SkillListTileState extends ConsumerState<SkillListTile> {
   @override
   Widget build(BuildContext context) {
     if (widget.display) {
-      return Material( // needed for hero -> list tile
+      return Material(
+        // needed for hero -> list tile
         color: Colors.transparent,
-        child: ListTile(
-          leading: const Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Icon(Icons.circle, size: 12),
-          ),
-          title: Text(
-            widget.skill.name,
-            style: const TextStyle(fontSize: 18),
-          ),
-          trailing: Text(
-            "${widget.skill.value + widget.chara.getSPByType(widget.skill.type) ~/ 10}",
-            style: const TextStyle(fontSize: 22),
-          ),
+        child: BasicListTile(
+          title: widget.skill.name,
+          trailing:
+              "${widget.skill.value + widget.chara.getSPByType(widget.skill.type) ~/ 10}",
+          hideLeading: true,
         ),
       );
     }
@@ -169,12 +164,17 @@ class _SkillListTileState extends ConsumerState<SkillListTile> {
     if (!widget.charaCreation) {
       widget.skill.save(ref.read(Prov.skillsBox));
     }
+    widget.updateSkill();
     FocusScope.of(context).unfocus();
   }
 
   void addSP(int val) {
-    if ((widget.skill.value - val) < 0) return;
-    widget.skill.value += val;
+    if (val > 0 && (widget.skill.value - val) < 0) return;
+    if((widget.skill.value + val) > 100) {
+      widget.skill.value = 100;
+    } else {
+      widget.skill.value += val;
+    }
     skillValueController.text = "${widget.skill.value}";
     if (!widget.charaCreation) {
       widget.skill.save(ref.read(Prov.skillsBox));

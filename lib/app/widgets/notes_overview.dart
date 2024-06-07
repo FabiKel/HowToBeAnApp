@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:htbah_app/app/notes_page/note_page.dart';
 import 'package:htbah_app/app/notes_page/notes_page.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -19,12 +19,7 @@ class _NotesOverviewState extends State<NotesOverview> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black26,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      width: double.infinity,
+    return DarkContainerBox(
       height: 150,
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),

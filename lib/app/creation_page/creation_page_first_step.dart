@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:htbah_app/app/creation_page/creation_page_focus.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
 import 'package:htbah_app/models/character.dart';
 
 class CreationPageFirstStep extends StatelessWidget {
@@ -86,11 +87,7 @@ class CreationPageFirstStep extends StatelessWidget {
       ),
     ];
 
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black26,
-        borderRadius: BorderRadius.circular(15),
-      ),
+    return DarkContainerBox(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       child: ListView.separated(

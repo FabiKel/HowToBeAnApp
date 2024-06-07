@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
+import 'package:htbah_app/app/widgets/design/list_view_separator.dart';
 import 'package:htbah_app/app/widgets/skill_list_tile.dart';
 import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
@@ -8,9 +10,15 @@ import 'package:htbah_app/models/skill.dart';
 
 class SkillsPage extends ConsumerStatefulWidget {
   final SkillType type;
+  final String title;
   final Character chara;
 
-  const SkillsPage(this.type, this.chara, {super.key});
+  const SkillsPage({
+    required this.type,
+    required this.chara,
+    required this.title,
+    super.key,
+  });
 
   @override
   ConsumerState<SkillsPage> createState() => _SkillsPageState();
@@ -19,17 +27,6 @@ class SkillsPage extends ConsumerStatefulWidget {
 class _SkillsPageState extends ConsumerState<SkillsPage> {
   final newSkillController = TextEditingController();
   bool edit = false;
-
-  String typeToText() {
-    switch (widget.type) {
-      case SkillType.action:
-        return "Handeln [ ${widget.chara.spAct} | +${widget.chara.spAct ~/ 10} ]";
-      case SkillType.wisdom:
-        return "Wissen [ ${widget.chara.spWis} | +${widget.chara.spWis ~/ 10} ]";
-      case SkillType.social:
-        return "Sozial [ ${widget.chara.spSoc} | +${widget.chara.spSoc ~/ 10} ]";
-    }
-  }
 
   List<Skill> getSkillsByType() {
     switch (widget.type) {
@@ -53,7 +50,7 @@ class _SkillsPageState extends ConsumerState<SkillsPage> {
     final skills = getSkillsByType();
     return Scaffold(
       appBar: AppBar(
-        title: Text(typeToText()),
+        title: Text(widget.title),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -69,12 +66,9 @@ class _SkillsPageState extends ConsumerState<SkillsPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          _SkillsMetaInfo(chara: widget.chara, type: widget.type),
           if (edit)
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.black26,
-              ),
+            DarkContainerBox(
               margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
               child: Row(
@@ -109,14 +103,14 @@ class _SkillsPageState extends ConsumerState<SkillsPage> {
           Expanded(
             child: Hero(
               tag: "skills_hero",
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.black26,
-                ),
+              child: DarkContainerBox(
                 margin: const EdgeInsets.all(10),
-                child: ListView.builder(
+                child: ListView.separated(
                   itemCount: skills.length,
+                  separatorBuilder: (c, i) {
+                    if (edit) return const SizedBox();
+                    return const ListViewSeparator();
+                  },
                   itemBuilder: (c, i) {
                     final skill = skills.elementAt(i);
                     return SkillListTile(
@@ -133,6 +127,71 @@ class _SkillsPageState extends ConsumerState<SkillsPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SkillsMetaInfo extends ConsumerStatefulWidget {
+  final Character chara;
+  final SkillType type;
+
+  const _SkillsMetaInfo({required this.chara, required this.type, super.key});
+
+  @override
+  ConsumerState<_SkillsMetaInfo> createState() => _SkillsMetaInfoState();
+}
+
+class _SkillsMetaInfoState extends ConsumerState<_SkillsMetaInfo> {
+  @override
+  Widget build(BuildContext context) {
+    final gbp = widget.chara.getGBPByType(widget.type);
+    final index = widget.type.index;
+
+    // Backup for older Characters
+    if(widget.chara.gbpUsed.isEmpty) widget.chara.gbpUsed = [0, 0, 0];
+
+    return Row(
+      children: [
+        Expanded(
+          flex: 4,
+          child: DarkContainerBox(
+            margin: const EdgeInsets.fromLTRB(10, 10, 5, 0),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(15),
+              onTap: () => setState(() {
+                if(widget.chara.gbpUsed[index] == gbp) return;
+                widget.chara.gbpUsed[index] += 1;
+                widget.chara.save(ref.read(Prov.charaBox));
+              }),
+              onLongPress: () => setState(() {
+                widget.chara.gbpUsed[index] = 0;
+                widget.chara.save(ref.read(Prov.charaBox));
+              }),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Text("GBP", style: TextStyle(fontSize: 25)),
+                  Text(
+                    "${gbp - widget.chara.gbpUsed[index]}/$gbp",
+                    style: const TextStyle(fontSize: 25),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: DarkContainerBox(
+            margin: const EdgeInsets.fromLTRB(5, 10, 10, 0),
+            child: Text(
+              "+${widget.chara.getBaseValByType(widget.type)}",
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 25),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

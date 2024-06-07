@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:htbah_app/app/inventory_page/inventory_item_page.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
 import 'package:htbah_app/app/widgets/inventory_list_tile.dart';
-import 'package:htbah_app/app/widgets/list_view_separator.dart';
-import 'package:htbah_app/db/provider.dart';
+import 'package:htbah_app/app/widgets/design/list_view_separator.dart';
 import 'package:htbah_app/models/character.dart';
-import 'package:htbah_app/models/inventory_item.dart';
 
 class InventoryPage extends ConsumerStatefulWidget {
   final Character chara;
@@ -28,15 +26,10 @@ class _InventoryPageState extends ConsumerState<InventoryPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.black26,
-              ),
+            child: DarkContainerBox(
               margin: const EdgeInsets.symmetric(horizontal: 10),
-              child: ListView.separated(
+              child: ListView.builder(
                 itemCount: widget.chara.inventory.length,
-                separatorBuilder: (c, i) => const ListViewSeparator(),
                 itemBuilder: (c, i) {
                   final item = widget.chara.inventory.elementAt(i);
                   return InventoryListTile(

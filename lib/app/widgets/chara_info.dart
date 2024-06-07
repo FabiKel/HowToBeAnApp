@@ -1,18 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:htbah_app/app/widgets/design/basic_list_tile.dart';
+import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
 
-class CharaInfo extends StatefulWidget {
+class CharaInfo extends ConsumerStatefulWidget {
   final Character chara;
 
   const CharaInfo(this.chara, {super.key});
 
   @override
-  State<CharaInfo> createState() => _CharaInfoState();
+  ConsumerState<CharaInfo> createState() => _CharaInfoState();
 }
 
-class _CharaInfoState extends State<CharaInfo> {
+class _CharaInfoState extends ConsumerState<CharaInfo> {
   void updateProperty(String value, String title) {
     switch (title) {
       case "Geschlecht":
@@ -36,6 +38,7 @@ class _CharaInfoState extends State<CharaInfo> {
       default:
         throw "UKNOW PROPERTY: $title";
     }
+    widget.chara.save(ref.read(Prov.charaBox));
     setState(() {});
   }
 
@@ -82,7 +85,7 @@ class _CharaInfoState extends State<CharaInfo> {
                 updateProperty: updateProperty,
               ),
               _CharaInfoItem(
-                "Familie",
+                "Familienstand",
                 widget.chara.family,
                 updateProperty: updateProperty,
               ),
@@ -109,69 +112,43 @@ class _CharaInfoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-      child: InkWell(
-        onLongPress: () async {
-          final tCont = TextEditingController(text: value);
+    return BasicListTile(
+      title: title,
+      subtitle: value,
+      onLongPress: () => startEditing(context),
+    );
+  }
 
-          await showDialog<String>(
-            context: context,
-            builder: (c) {
-              return AlertDialog(
-                content: TextField(
-                  controller: tCont,
-                  keyboardType: isNumber ? TextInputType.number : null,
-                  inputFormatters: [
-                    if (isNumber) FilteringTextInputFormatter.digitsOnly
-                  ],
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text("doch nicht"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context, tCont.text);
-                    },
-                    child: const Text("speichern"),
-                  ),
-                ],
-              );
-            },
-          ).then((input) {
-            if (input == null) return;
-            updateProperty(input, title);
-          });
-        },
-        child: Row(
-          children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(5, 0, 15, 0),
-              child: Icon(Icons.circle, size: 12),
+  void startEditing(BuildContext context) async {
+    final tCont = TextEditingController(text: value);
+    await showDialog<String>(
+      context: context,
+      builder: (c) {
+        return AlertDialog(
+          content: TextField(
+            controller: tCont,
+            keyboardType: isNumber ? TextInputType.number : null,
+            inputFormatters: [
+              if (isNumber) FilteringTextInputFormatter.digitsOnly
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("doch nicht"),
             ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    value,
-                    style: const TextStyle(fontSize: 17),
-                  ),
-                ],
-              ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, tCont.text);
+              },
+              child: const Text("speichern"),
             ),
           ],
-        ),
-      ),
-    );
+        );
+      },
+    ).then((input) {
+      if (input == null) return;
+      updateProperty(input, title);
+    });
   }
 }

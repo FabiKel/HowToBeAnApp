@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
 import 'package:htbah_app/app/widgets/skill_list_tile.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:htbah_app/models/skill.dart';
@@ -34,11 +34,7 @@ class _CreationPageThirdStepState extends State<CreationPageThirdStep> {
   Widget build(BuildContext context) {
     final int sp = widget.newChara.getSPByType(widget.type);
 
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Colors.black26,
-      ),
+    return DarkContainerBox(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       child: Column(

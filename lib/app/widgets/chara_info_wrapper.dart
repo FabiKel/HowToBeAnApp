@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:htbah_app/app/widgets/chara_description.dart';
 import 'package:htbah_app/app/widgets/chara_info.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
 import 'package:htbah_app/app/widgets/inventory_overview.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -20,11 +21,7 @@ class _CharaInfoWrapperState extends State<CharaInfoWrapper> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.black26,
-        ),
+      child: DarkContainerBox(
         margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: Stack(
           children: [

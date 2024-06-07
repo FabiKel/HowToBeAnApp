@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
 import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
 
@@ -16,11 +17,7 @@ class LPTile extends ConsumerStatefulWidget {
 class _LPTileState extends ConsumerState<LPTile> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black26,
-        borderRadius: BorderRadius.circular(15),
-      ),
+    return DarkContainerBox(
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ListTile(
         onLongPress: () => setState(() {
