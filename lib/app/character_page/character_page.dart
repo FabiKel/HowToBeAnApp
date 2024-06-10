@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:htbah_app/app/character_page/character_page_skillbar.dart';
 import 'package:htbah_app/app/deletion_page.dart';
-import 'package:htbah_app/app/widgets/design/not_implemented_helper.dart';
+import 'package:htbah_app/app/export_page.dart';
 import 'package:htbah_app/app/widgets/chara_info_wrapper.dart';
 import 'package:htbah_app/app/widgets/lp_tile.dart';
 import 'package:htbah_app/app/widgets/notes_overview.dart';
@@ -78,15 +78,20 @@ class _CharacterPageState extends ConsumerState<CharacterPage> {
                   await Future.delayed(const Duration(milliseconds: 100));
                   nameFocus.requestFocus();
                 } else if (action == 1) {
-                  // TODO: export
-                  NotImplemented.show(context);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return ExportPage(chara: widget.chara);
+                    }),
+                    (route) => false,
+                  );
                 } else if (action == 2) {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) {
                       return DeletionPage(widget.chara);
                     }),
-                        (route) => false,
+                    (route) => false,
                   );
                 }
               });
@@ -114,7 +119,7 @@ class _CharacterPageState extends ConsumerState<CharacterPage> {
 class _CharaEditDialog extends StatelessWidget {
   final Character chara;
 
-  const _CharaEditDialog(this.chara, {super.key});
+  const _CharaEditDialog(this.chara);
 
   @override
   Widget build(BuildContext context) {

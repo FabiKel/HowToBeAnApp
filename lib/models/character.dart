@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 import 'package:htbah_app/models/inventory_item.dart';
 import 'package:htbah_app/models/skill.dart';
 import 'package:objectbox/objectbox.dart';
@@ -114,5 +115,30 @@ class Character {
       description: "",
       isHidden: false,
     );
+  }
+
+  String toJson() {
+    final jsonMap = {
+      "name": name,
+      "created": created.millisecondsSinceEpoch,
+      "updated":
+          updated?.millisecondsSinceEpoch ?? created.millisecondsSinceEpoch,
+      "gender": gender,
+      "age": age,
+      "lp": lp,
+      "lpMax": lpMax,
+      "body": body,
+      "religion": religion,
+      "profession": profession,
+      "family": family,
+      "image": image,
+      "description": description,
+      "isHidden": isHidden,
+      "gbpUsed": gbpUsed,
+      "skills": skills,
+      "notes": notes,
+      "inventory": inventory,
+    };
+    return jsonEncode(jsonMap);
   }
 }

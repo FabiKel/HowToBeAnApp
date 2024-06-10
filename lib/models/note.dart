@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:htbah_app/models/character.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -43,9 +45,29 @@ class Note {
     Box<Character>? charaBox,
   }) {
     notesBox.remove(id);
-    if(chara != null && charaBox != null) {
+    if (chara != null && charaBox != null) {
       chara.notes.removeWhere((note) => note.id == id);
       chara.save(charaBox);
     }
+  }
+
+  String toJson() {
+    final jsonMap = {
+      "id": id,
+      "title": title,
+      "text": text,
+      "_updated": _updated,
+      "created": created,
+    };
+    return jsonEncode(jsonMap);
+  }
+
+  factory Note.fromJson(String jsonString) {
+    final jsonMap = jsonDecode(jsonString);
+    return Note(
+      title: jsonMap["title"],
+      text: jsonMap["text"],
+      created: jsonMap["created"],
+    );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:htbah_app/models/character.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -55,5 +57,24 @@ class Skill {
       chara.skills.removeWhere((skill) => skill.id == id);
       chara.save(charaBox);
     }
+  }
+
+  String toJson() {
+    final jsonMap = {
+      "id": 0,
+      "name": name,
+      "value": value,
+      "type": typeIndex,
+    };
+    return jsonEncode(jsonMap);
+  }
+
+  factory Skill.fromJson(String jsonString) {
+    final jsonMap = jsonDecode(jsonString);
+    return Skill(
+      name: jsonMap["name"],
+      value: jsonMap["value"],
+      typeIndex: jsonMap["typeIndex"],
+    );
   }
 }
