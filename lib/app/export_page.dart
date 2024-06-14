@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:htbah_app/app/start.dart';
 import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
+import 'package:htbah_app/app/widgets/design/snacker.dart';
 import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:htbah_app/objectbox.g.dart';
@@ -53,6 +54,7 @@ class _ExportPAgeState extends ConsumerState<ExportPage> {
                   final charaEntry = charas.entries.elementAt(i);
                   return CheckboxListTile(
                     title: Text(charaEntry.key.name),
+                    subtitle: Text(charaEntry.key.shortDesc),
                     value: charaEntry.value,
                     onChanged: (val) => setState(() {
                       charas[charaEntry.key] = val ?? false;
@@ -65,8 +67,8 @@ class _ExportPAgeState extends ConsumerState<ExportPage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: ElevatedButton(
-              onPressed: () => export(),
-              child: const Text("Export nach..."),
+              onPressed: () async => await export(),
+              child: const Text("Exportieren"),
             ),
           ),
         ],
@@ -74,45 +76,39 @@ class _ExportPAgeState extends ConsumerState<ExportPage> {
     );
   }
 
-  void export() async {
-    await getExternalStorageDirectory().then((dir) async {
-      if (dir != null) {
+  Future<void> export() async {
+    await getTemporaryDirectory().then((dir) async {
+      try {
         final date = DateTime.now();
         final fileName = "${dir.path}/htbaa-exp-${date.year}_${date.month}_"
             "${date.day}-${date.hour}:${date.minute}.json";
         final file = File(fileName);
-        final selected = charas.entries.where((entry) => entry.value).map((e) {
-          return e.key;
+
+        final selected = charas.entries.where((e) => e.value).map((entry) {
+          return entry.key;
         }).toList();
-        await file.writeAsString(jsonEncode(selected)).then((_) {
-          if (file.existsSync()) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const Start()),
-              (route) => false,
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Inhalte wurden exportiert."),
-              ),
-            );
+        final content = jsonEncode(selected);
+
+        await file.writeAsString(content);
+        await FilePicker.platform
+            .saveFile(
+          dialogTitle: "Wähle einen Speicherort",
+          fileName: fileName,
+          bytes: await file.readAsBytes(),
+        )
+            .then((filePath) {
+          if (filePath == null) {
+            Snacker.showSnackbar(context, "Speichervorgang abgebrochen");
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Inhalte wurden NICHT exportiert. "
-                    "Datei konnte nicht geschrieben werden"),
-              ),
-            );
+            Snacker.showSnackbar(context, "Datei erfolgreich gespeichert");
           }
         });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Inhalte wurden NICHT exportiert. "
-                "Ordner konnte nicht gefunden werden."),
-          ),
-        );
+        await file.delete();
+      } catch (e) {
+        Snacker.showSnackbar(context, "DATEIFEHLER: $e");
       }
     });
   }
+
+
 }

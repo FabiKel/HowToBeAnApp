@@ -42,7 +42,7 @@ class _CharacterPageState extends ConsumerState<CharacterPage> {
                 icon: const Icon(Icons.check),
               ),
         title: Hero(
-          tag: "chara_name_${widget.chara.name}",
+          tag: "chara_id_${widget.chara.id}",
           child: !editName
               ? Material(
                   color: Colors.transparent,
@@ -78,12 +78,12 @@ class _CharacterPageState extends ConsumerState<CharacterPage> {
                   await Future.delayed(const Duration(milliseconds: 100));
                   nameFocus.requestFocus();
                 } else if (action == 1) {
-                  Navigator.pushAndRemoveUntil(
+                  Navigator.pop(context);
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) {
                       return ExportPage(chara: widget.chara);
                     }),
-                    (route) => false,
                   );
                 } else if (action == 2) {
                   Navigator.pushAndRemoveUntil(

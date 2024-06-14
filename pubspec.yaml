@@ -3,7 +3,7 @@ description: "App for How to be a Hero PnP"
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.1+1
+version: 0.0.3+1
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
@@ -18,6 +18,7 @@ dependencies:
   file_picker: ^8.0.4
   permission_handler: ^11.3.1
   path_provider: ^2.1.3
+  rename_app: ^1.5.0
 
 
 dev_dependencies:

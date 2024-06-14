@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:htbah_app/app/creation_page/creation_page_first_step.dart';
 import 'package:htbah_app/app/creation_page/creation_page_focus.dart';
 import 'package:htbah_app/app/creation_page/creation_page_third_step.dart';
+import 'package:htbah_app/app/import_page.dart';
 import 'package:htbah_app/app/widgets/design/dark_container_box.dart';
+import 'package:htbah_app/app/widgets/design/not_implemented_helper.dart';
 import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
 import 'package:htbah_app/models/skill.dart';
@@ -37,7 +43,10 @@ class _CreationPageState extends ConsumerState<CreationPage> {
       appBar: AppBar(
         title: const Text("Neuer Charakter"),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.import_export)),
+          IconButton(
+            onPressed: () async => await import(),
+            icon: const Icon(Icons.import_export),
+          ),
         ],
       ),
       body: Column(
@@ -128,7 +137,7 @@ class _CreationPageState extends ConsumerState<CreationPage> {
   }
 
   void continueAction() {
-    if(pageIndex != 4) {
+    if (pageIndex != 4) {
       setState(() {
         pageViewController.animateToPage(
           ++pageIndex,
@@ -139,6 +148,22 @@ class _CreationPageState extends ConsumerState<CreationPage> {
     } else {
       newChara.save(ref.read(Prov.charaBox));
       Navigator.pop(context);
+    }
+  }
+
+  Future<void> import() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+    File file = File(result.files.single.path!);
+    final List<dynamic> content = jsonDecode(await file.readAsString());
+    if (content.runtimeType == List<dynamic>) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ImportPage(content)),
+      );
+    } else {
+      // TODO: Single Character import
+      NotImplemented.show(context);
     }
   }
 }

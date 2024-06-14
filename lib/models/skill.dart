@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:htbah_app/models/character.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -59,22 +57,21 @@ class Skill {
     }
   }
 
-  String toJson() {
+  Map<String, dynamic> toJson() {
     final jsonMap = {
       "id": 0,
       "name": name,
       "value": value,
       "type": typeIndex,
     };
-    return jsonEncode(jsonMap);
+    return jsonMap;
   }
 
-  factory Skill.fromJson(String jsonString) {
-    final jsonMap = jsonDecode(jsonString);
+  factory Skill.fromJson(Map<String, dynamic> jsonMap) {
     return Skill(
       name: jsonMap["name"],
       value: jsonMap["value"],
-      typeIndex: jsonMap["typeIndex"],
+      typeIndex: jsonMap["type"],
     );
   }
 }

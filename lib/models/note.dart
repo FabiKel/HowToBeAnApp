@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:htbah_app/models/character.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -51,7 +49,7 @@ class Note {
     }
   }
 
-  String toJson() {
+  Map<String, dynamic> toJson() {
     final jsonMap = {
       "id": id,
       "title": title,
@@ -59,11 +57,10 @@ class Note {
       "_updated": _updated,
       "created": created,
     };
-    return jsonEncode(jsonMap);
+    return jsonMap;
   }
 
-  factory Note.fromJson(String jsonString) {
-    final jsonMap = jsonDecode(jsonString);
+  factory Note.fromJson(Map<String, dynamic> jsonMap) {
     return Note(
       title: jsonMap["title"],
       text: jsonMap["text"],

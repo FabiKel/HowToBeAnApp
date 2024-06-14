@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:htbah_app/models/character.dart';
 import 'package:htbah_app/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
@@ -42,18 +40,17 @@ class InventoryItem {
     }
   }
 
-  String toJson() {
+  Map<String, dynamic> toJson() {
     final jsonMap = {
       "id": id,
       "name": name,
       "description": description,
       "image": image,
     };
-    return jsonEncode(jsonMap);
+    return jsonMap;
   }
 
-  factory InventoryItem.fromJson(String jsonString) {
-    final jsonMap = jsonDecode(jsonString);
+  factory InventoryItem.fromJson(Map<String, dynamic> jsonMap) {
     return InventoryItem(
       name: jsonMap["name"],
       description: jsonMap["description"],

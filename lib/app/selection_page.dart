@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:htbah_app/app/character_page/character_page.dart';
 import 'package:htbah_app/app/creation_page/creation_page.dart';
-import 'package:htbah_app/app/deletion_page.dart';
 import 'package:htbah_app/app/widgets/design/not_implemented_helper.dart';
 import 'package:htbah_app/db/provider.dart';
 import 'package:htbah_app/models/character.dart';
@@ -74,7 +72,7 @@ class _SelectionPageState extends ConsumerState<SelectionPage> {
                     child: ListTile(
                       leading: const Icon(Icons.circle, size: 12),
                       title: Hero(
-                        tag: "chara_name_${chara.name}",
+                        tag: "chara_id_${chara.id}",
                         child: Material(
                           color: Colors.transparent,
                           child: Text(

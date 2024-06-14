@@ -141,4 +141,43 @@ class Character {
     };
     return jsonEncode(jsonMap);
   }
+
+  factory Character.fromJson(Map<String, dynamic> jsonMap) {
+    late final List<int> gbpUsed;
+    if(jsonMap["gbpUsed"] == null || (jsonMap["gbpUsed"] as List).isEmpty) {
+      gbpUsed = [0, 0, 0];
+    } else {
+      gbpUsed = List<int>.from(jsonMap["gbpUsed"]);
+    }
+    final chara = Character(
+      name: jsonMap["name"],
+      created: DateTime.fromMillisecondsSinceEpoch(jsonMap["created"]),
+      updated: DateTime.fromMillisecondsSinceEpoch(jsonMap["updated"]),
+      gender: jsonMap["gender"],
+      age: jsonMap["age"],
+      lp: jsonMap["lp"],
+      lpMax: jsonMap["lpMax"],
+      body: jsonMap["body"],
+      religion: jsonMap["religion"],
+      profession: jsonMap["profession"],
+      family: jsonMap["family"],
+      image: jsonMap["image"],
+      description: jsonMap["description"],
+      isHidden: jsonMap["isHidden"],
+      gbpUsed: gbpUsed,
+    );
+    for(final item in jsonMap["skills"]) {
+      final Skill skill = Skill.fromJson(item);
+      chara.skills.add(skill);
+    }
+    for(final item in jsonMap["notes"]) {
+      final Note note = Note.fromJson(item);
+      chara.notes.add(note);
+    }
+    for(final item in jsonMap["inventory"]) {
+      final InventoryItem invItem = InventoryItem.fromJson(item);
+      chara.inventory.add(invItem);
+    }
+    return chara;
+  }
 }
